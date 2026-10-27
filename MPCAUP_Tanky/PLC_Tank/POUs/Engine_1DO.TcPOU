@@ -30,13 +30,25 @@ END_VAR
 {region "Running time"} 
     // counting running time of engine - (motoseconds in real situation it should be moto hours)
     // detection rising edge of input secimp - should be conected 1Hz internal clock from PLC
+	ioEngStruct.RisingEdgeTrigger(CLK := iSecImp);
+	IF ioEngStruct.RisingEdgeTrigger.Q AND ioEngStruct.State.Run THEN
+		ioEngStruct.State.RT := ioEngStruct.State.RT + 1;
+	END_IF;
 	
+	IF ioEngStruct.Cmd.SetRT <> 0 THEN
+		ioEngStruct.State.RT := ioEngStruct.Cmd.SetRT;
+		ioEngStruct.Cmd.SetRT := 0;
+	END_IF
 {endregion}
 	 
  
 {region "Manual/Automat"}
 	// switching state of engine - automatic or manual control (default state is manual)
-	
+	IF ioEngStruct.Cmd.AutCtrl AND NOT ioEngStruct.State.AutCtrl THEN
+		ioEngStruct.State.AutCtrl := TRUE;
+		ioEngStruct.State.ManCtrl := FALSE;
+		ioEngStruct.State.RunOut := FALSE;
+	END_IF
 {endregion}
 	 
 {region "MayRun / MayAutoRun"}
