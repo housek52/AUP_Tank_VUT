@@ -1,0 +1,13 @@
+.vs/
+_Boot/
+_CompileInfo/
+_Libraries/
+*.bak
+*.tclrs
+*.tmc
+*.tpy
+*.suo
+*.compileinfo
+*.tizip
+*.tpzip
+*.tszip
