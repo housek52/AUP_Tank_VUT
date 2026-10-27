@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
   <POU Name="Valve_2DO" Id="{86469f36-9490-4936-ae7d-f4831ca2b758}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Valve_2DO
 VAR_INPUT
@@ -149,50 +149,5 @@ oClose := ioValStruct.State.CloseOut;
     END_IF;
 {endregion}]]></ST>
     </Implementation>
-    <LineIds Name="Valve_2DO">
-      <LineId Id="303" Count="0" />
-      <LineId Id="307" Count="1" />
-      <LineId Id="446" Count="0" />
-      <LineId Id="305" Count="0" />
-      <LineId Id="304" Count="0" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="126" Count="1" />
-      <LineId Id="329" Count="0" />
-      <LineId Id="132" Count="0" />
-      <LineId Id="144" Count="0" />
-      <LineId Id="128" Count="0" />
-      <LineId Id="159" Count="1" />
-      <LineId Id="164" Count="0" />
-      <LineId Id="328" Count="0" />
-      <LineId Id="309" Count="18" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="190" Count="1" />
-      <LineId Id="330" Count="18" />
-      <LineId Id="201" Count="0" />
-      <LineId Id="192" Count="0" />
-      <LineId Id="202" Count="1" />
-      <LineId Id="359" Count="5" />
-      <LineId Id="401" Count="0" />
-      <LineId Id="405" Count="0" />
-      <LineId Id="403" Count="1" />
-      <LineId Id="367" Count="0" />
-      <LineId Id="371" Count="9" />
-      <LineId Id="383" Count="10" />
-      <LineId Id="351" Count="0" />
-      <LineId Id="349" Count="0" />
-      <LineId Id="204" Count="0" />
-      <LineId Id="407" Count="0" />
-      <LineId Id="281" Count="0" />
-      <LineId Id="408" Count="0" />
-      <LineId Id="259" Count="0" />
-      <LineId Id="409" Count="16" />
-      <LineId Id="262" Count="0" />
-      <LineId Id="260" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
