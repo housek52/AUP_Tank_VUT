@@ -32,7 +32,23 @@ END_VAR
 	 
 {region "Manual/Automat"}
 	// switching state of engine - automatic or manual control (default state is manual)
+	IF NOT ioValStruct.State.AutCtrl AND ioValStruct.Cmd.AutCtrl THEN
+		ioValStruct.State.ManCtrl := FALSE;
+		ioValStruct.State.AutCtrl := TRUE;
+		ioValStruct.State.OpenOut := FALSE;
+		ioValStruct.State.CloseOut := FALSE;		
+	ELSIF NOT ioValStruct.State.ManCtrl AND ioValStruct.Cmd.ManCtrl THEN
+		ioValStruct.State.AutCtrl := FALSE;
+		ioValStruct.State.ManCtrl := TRUE;
+		ioValStruct.State.OpenOut := FALSE;
+		ioValStruct.State.CloseOut := FALSE;
+	END_IF
 	
+	ioValStruct.Cmd.AutCtrl := FALSE;
+	ioValStruct.Cmd.ManCtrl := FALSE;
+	IF NOT ioValStruct.State.ManCtrl AND NOT ioValStruct.State.AutCtrl THEN
+		ioValStruct.State.ManCtrl := TRUE;
+	END_IF
 {endregion}
 	 
 {region "MayRun / MayAutoRun"}

@@ -48,6 +48,14 @@ END_VAR
 		ioEngStruct.State.AutCtrl := TRUE;
 		ioEngStruct.State.ManCtrl := FALSE;
 		ioEngStruct.State.RunOut := FALSE;
+	ELSIF ioEngStruct.Cmd.ManCtrl AND NOT ioEngStruct.State.ManCtrl THEN
+		ioEngStruct.State.ManCtrl := TRUE;
+		ioEngStruct.State.AutCtrl := FALSE;
+		ioEngStruct.State.RunOut := FALSE;
+	END_IF
+	
+	IF NOT ioEngStruct.State.AutCtrl AND NOT ioEngStruct.State.ManCtrl THEN
+		ioEngStruct.State.ManCtrl := TRUE;
 	END_IF
 {endregion}
 	 
