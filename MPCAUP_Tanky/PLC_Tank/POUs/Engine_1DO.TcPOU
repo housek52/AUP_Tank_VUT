@@ -14,7 +14,6 @@ VAR_IN_OUT
 	ioEngStruct : TEngine;
 END_VAR
 VAR
-	secImpEdge: BOOL;
 	tempStartupFail: BOOL;
 END_VAR
 
