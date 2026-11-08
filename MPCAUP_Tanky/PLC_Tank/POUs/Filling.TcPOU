@@ -18,34 +18,113 @@ END_VAR
     <Implementation>
       <ST><![CDATA[{region "REGION Aut/Man"}
     // switching state of engine - automatic or manual control (default state is manual)
-  
+    IF FillingPhase.Cmd.AutCtrl AND NOT FillingPhase.State.AutCtrl THEN
+        FillingPhase.State.AutCtrl := TRUE;
+        FillingPhase.State.ManCtrl := FALSE;
+        FillingPhase.State.Running := FALSE;
+        FillingPhase.State.Paused  := FALSE;
+        FillingPhase.State.Idle    := TRUE;
+    ELSIF FillingPhase.Cmd.ManCtrl AND NOT FillingPhase.State.ManCtrl THEN
+        FillingPhase.State.ManCtrl := TRUE;
+        FillingPhase.State.AutCtrl := FALSE;
+        FillingPhase.State.Running := FALSE;
+        FillingPhase.State.Paused  := FALSE;
+        FillingPhase.State.Idle    := TRUE;
+    END_IF;
+    FillingPhase.Cmd.AutCtrl := FALSE;
+    FillingPhase.Cmd.ManCtrl := FALSE;
+
+    IF NOT FillingPhase.State.AutCtrl AND NOT FillingPhase.State.ManCtrl THEN
+        FillingPhase.State.ManCtrl := TRUE;
+    END_IF;
 {endregion}
 
 {region "ManCtrl"}
     // processing manual actions - if command is processed, it is sets to FALSE even if can't be processed
-    // Phase commands are start, stop, pause and resume 
-    // Start - open filling valve 
-    // Stop - close filling valve
-    // Pause - close filling valve
-    // Resume - open filling valve
+    IF FillingPhase.State.ManCtrl THEN
+    
+        // Start - open filling valve 
+        IF FillingPhase.Cmd.StartMan AND FillingPhase.State.Idle AND NOT FillingValve.State.GenErr THEN
+            FillingPhase.State.Idle    := FALSE;
+            FillingPhase.State.Running := TRUE;
+            FillingPhase.State.Done    := FALSE;
+            FillingValve.Cmd.AutCtrl   := TRUE;   // valve must be in auto, the phase drives it by requests
+        END_IF;
+        // Stop - close filling valve
+        IF FillingPhase.Cmd.StopMan AND (FillingPhase.State.Running OR FillingPhase.State.Paused) THEN
+            FillingPhase.State.Running := FALSE;
+            FillingPhase.State.Paused  := FALSE;
+            FillingPhase.State.Idle    := TRUE;
+        END_IF;
+        // Pause - close filling valve
+        IF FillingPhase.Cmd.PauseMan AND FillingPhase.State.Running THEN
+            FillingPhase.State.Running := FALSE;
+            FillingPhase.State.Paused  := TRUE;
+        END_IF;
+        // Resume - open filling valve
+        IF FillingPhase.Cmd.ResumeMan AND FillingPhase.State.Paused AND NOT FillingValve.State.GenErr THEN
+            FillingPhase.State.Paused  := FALSE;
+            FillingPhase.State.Running := TRUE;
+        END_IF;
     // real states of phase are writed into states in phase structure
-   
+    END_IF;
+
+    FillingPhase.Cmd.StartMan  := FALSE;
+    FillingPhase.Cmd.StopMan   := FALSE;
+    FillingPhase.Cmd.PauseMan  := FALSE;
+    FillingPhase.Cmd.ResumeMan := FALSE;
 {endregion}
 
 {region "AutCtrl"}
     // if request to run in automatic mode and phase can be run in automatic mode switch phase to running
-   
+    IF FillingPhase.State.AutCtrl THEN
+        IF FillingPhase.Cmd.StartAut AND FillingPhase.State.Idle AND NOT FillingValve.State.GenErr THEN
+            FillingPhase.State.Idle    := FALSE;
+            FillingPhase.State.Running := TRUE;
+            FillingPhase.State.Done    := FALSE;
+            FillingValve.Cmd.AutCtrl   := TRUE;
+        END_IF;
+
+        IF FillingPhase.Cmd.StopAut AND (FillingPhase.State.Running OR FillingPhase.State.Paused) THEN
+            FillingPhase.State.Running := FALSE;
+            FillingPhase.State.Paused  := FALSE;
+            FillingPhase.State.Idle    := TRUE;
+        END_IF;
+    END_IF;
+
+    FillingPhase.Cmd.StartAut := FALSE;
+    FillingPhase.Cmd.StopAut  := FALSE;
 {endregion}
 
 {region "Done"}
     //every phase should have finish condition - filling phase - if water level is above requested level
     //after that done state should be setted to 1
-   
+    IF FillingPhase.State.Running AND (FillingPhase.WaterLevel >= FillingPhase.ParamFillLevel) THEN
+        FillingPhase.State.Running := FALSE;
+        FillingPhase.State.Idle    := TRUE;
+        FillingPhase.State.Done    := TRUE;
+    END_IF;
+
+    IF FillingPhase.Cmd.ResetDone THEN
+        FillingPhase.State.Done := FALSE;
+        FillingPhase.Cmd.ResetDone := FALSE;
+    END_IF;
 {endregion}
 
 {region "States"} 
     //Command valve in cases of states
+    IF FillingPhase.State.Running AND FillingValve.State.GenErr THEN
+        FillingPhase.State.Running := FALSE;
+        FillingPhase.State.Paused  := TRUE;
+    END_IF;
 
+    IF FillingPhase.State.Running THEN
+        FillingValve.Cmd.Req2OpenAut  := TRUE;
+        FillingValve.Cmd.Req2CloseAut := FALSE;
+    ELSE
+        FillingValve.Cmd.Req2OpenAut  := FALSE;
+        FillingValve.Cmd.Req2CloseAut := TRUE;
+    END_IF;
 {endregion}
 
 
