@@ -45,41 +45,41 @@ END_VAR
 
 {region "ManCtrl"}
     // processing manual actions - if command is processed, it is sets to FALSE even if can't be processed
-    MixingPhase.Cmd.StartMan  := FALSE;
-    MixingPhase.Cmd.StopMan   := FALSE;
-    MixingPhase.Cmd.PauseMan  := FALSE;
-    MixingPhase.Cmd.ResumeMan := FALSE;
-    // Phase commands are start, stop, pause and resume 
+    IF MixingPhase.State.ManCtrl THEN
 
-    // Start - start mixing
-    IF MixingPhase.Cmd.StartMan AND MixingPhase.State.Idle AND NOT MixerEng.State.GenErr THEN
+        // Start - start mixing
+        IF MixingPhase.Cmd.StartMan AND MixingPhase.State.Idle AND NOT MixerEng.State.GenErr THEN
             MixingPhase.State.Idle     := FALSE;
             MixingPhase.State.Running  := TRUE;
             MixingPhase.State.Done     := FALSE;
             MixingPhase.ElapsedTimeSec := 0;
             MixerEng.Cmd.AutCtrl := TRUE;     // mixer must be in auto, the phase drives it by request
-    END_IF;
+        END_IF;
 
-    // Stop - stop mixing
-    IF MixingPhase.Cmd.StopMan AND (MixingPhase.State.Running OR MixingPhase.State.Paused) THEN
+        // Stop - stop mixing
+        IF MixingPhase.Cmd.StopMan AND (MixingPhase.State.Running OR MixingPhase.State.Paused) THEN
             MixingPhase.State.Running := FALSE;
             MixingPhase.State.Paused  := FALSE;
             MixingPhase.State.Idle    := TRUE;
-    END_IF;
+        END_IF;
 
-    // Pause - stop mixing
-    IF MixingPhase.Cmd.PauseMan AND MixingPhase.State.Running THEN
+        // Pause - stop mixing
+        IF MixingPhase.Cmd.PauseMan AND MixingPhase.State.Running THEN
             MixingPhase.State.Running := FALSE;
             MixingPhase.State.Paused  := TRUE;
-    END_IF;
+        END_IF;
 
-    // Resume - start mixing
-    IF MixingPhase.Cmd.ResumeMan AND MixingPhase.State.Paused AND NOT MixerEng.State.GenErr THEN
+        // Resume - start mixing
+        IF MixingPhase.Cmd.ResumeMan AND MixingPhase.State.Paused AND NOT MixerEng.State.GenErr THEN
             MixingPhase.State.Paused  := FALSE;
             MixingPhase.State.Running := TRUE;
-    END_IF;
+        END_IF;
     // real states of phase are writed into states in phase structure
-   
+    END_IF;
+    MixingPhase.Cmd.StartMan  := FALSE;
+    MixingPhase.Cmd.StopMan   := FALSE;
+    MixingPhase.Cmd.PauseMan  := FALSE;
+    MixingPhase.Cmd.ResumeMan := FALSE;
 {endregion}
 
 {region "AutCtrl"}
