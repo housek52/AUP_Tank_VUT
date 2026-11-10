@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
   <GlobalTextList Name="GlobalTextList" Id="{8b92fa73-7e66-4a1d-8aae-2f4ecfc497d6}">
     <XmlArchive>
       <Data>
@@ -31,13 +31,48 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"884"</v>
+              <v n="TextDefault">"Draining Valve"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"673"</v>
+              <v n="TextDefault">"Engine"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"201"</v>
               <v n="TextDefault">"Filling Valve"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"934"</v>
+              <v n="TextDefault">"Heater"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"560"</v>
               <v n="TextDefault">"MAN"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"5"</v>
+              <v n="TextDefault">"Off"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"955"</v>
+              <v n="TextDefault">"off"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"153"</v>
+              <v n="TextDefault">"On"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"110"</v>
+              <v n="TextDefault">"on"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -53,6 +88,11 @@
             <o>
               <v n="TextID">"98"</v>
               <v n="TextDefault">"Res. SUF"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"828"</v>
+              <v n="TextDefault">"Running"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

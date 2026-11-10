@@ -70,13 +70,25 @@ END_VAR
 {region "ManCtrl"}
 	// processing manual actions - if command is processed, it is set to FALSE even if can't be processed
     // Engine commands are turn off (stop) and turn on (start)
-	
+	IF ioEngStruct.State.ManCtrl AND ioEngStruct.State.MayRun THEN
+		IF ioEngStruct.Cmd.TurnOnMan THEN
+			ioEngStruct.State.RunOut := TRUE;			
+		END_IF
+		
+		IF ioEngStruct.Cmd.TurnOffMan THEN
+			ioEngStruct.State.RunOut := FALSE;
+		END_IF
+	END_IF
+	ioEngStruct.Cmd.TurnOffMan := FALSE;
+	ioEngStruct.Cmd.TurnOnMan := FALSE;
 {endregion}
 	 
 {region "AutCtrl"}
 	//if request to run in automatic mode set outputs to right states if MAR
     //AutoRequest shouldn't be reseted to false state
-    
+    IF ioEngStruct.State.AutCtrl AND ioEngStruct.State.MayAutoRun THEN
+		ioEngStruct.State.RunOut := ioEngStruct.Cmd.Req2RunAutCtrl;
+	END_IF
 {endregion}
 	 
 {region "Error states"}
@@ -84,7 +96,25 @@ END_VAR
 	// error - input from digital input of plc - fyzical state of engine 
 	// calculating start up fail - if output is sets to start engine, it's expected feedback from running signal in defined time, if feedback doesn't show in this time, it should be start up fail error
 	// merge of these two error is general error
+	ioEngStruct.StartupFailTimer(IN := (ioEngStruct.State.RunOut AND (NOT iRunning)), PT := ioEngStruct.Time2Start);
+	tempStartupFail := ioEngStruct.StartupFailTimer.Q;
 	
+	IF tempStartupFail THEN
+		ioEngStruct.State.StartUpFail := TRUE;
+	END_IF
+	
+	ioEngStruct.State.Err := iError;
+	
+	IF ioEngStruct.Cmd.ResetSUF THEN
+		ioEngStruct.State.StartUpFail := FALSE;
+		ioEngStruct.Cmd.ResetSUF := FALSE;
+	END_IF
+	
+	ioEngStruct.State.GenErr := ioEngStruct.State.Err OR ioEngStruct.State.StartUpFail;
+	
+	IF ioEngStruct.State.GenErr THEN
+		ioEngStruct.State.RunOut := FALSE;
+	END_IF
 {endregion}
 	 
 oRun := ioEngStruct.State.RunOut;
