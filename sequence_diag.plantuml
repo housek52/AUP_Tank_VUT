@@ -1,0 +1,86 @@
+@startuml
+autonumber
+skinparam responseMessageBelowArrow true
+
+participant "Batch kontrolér" as BK
+
+box "Moduly zařízení (fáze)"
+  participant "Napouštění" as FIL
+  participant "Ohřev" as HEA
+  participant "Míchání" as MIX
+  participant "Vypouštění" as DRA
+end box
+
+box "Řídicí moduly"
+  participant "Plnicí ventil" as VF
+  participant "Vypouštěcí ventil" as VD
+  participant "Míchadlo" as MO
+  participant "Topení (PID)" as TO
+end box
+
+BK -> BK: ověř podmínky startu (fáze Idle, bez GenErr)
+
+alt podmínky splněny
+  note over BK, VD: 1. Napouštění
+  BK -> FIL: StartAut (ParamFillLevel)
+  FIL -> VF: Req2OpenAut = 1
+  VF --> FIL: OpenOut = 1, Open = 1
+  
+  loop dokud WaterLevel < ParamFillLevel
+    FIL -> FIL: čti WaterLevel
+    opt porucha ventilu
+      VF --> FIL: GenErr = 1, OpenOut = 0
+      FIL --> BK: stav Held, alarm
+      BK -> FIL: Restart (po zásahu operátora)
+    end
+  end
+  
+  FIL -> VF: Req2CloseAut = 1
+  VF --> FIL: Closed = 1
+  FIL --> BK: Done
+  BK -> FIL: ResetDone
+
+  note over BK, TO: 2. Ohřev s mícháním (paralelně)
+  par ohřev
+    BK -> HEA: StartAut (ParamReqTemp)
+    HEA -> TO: Req2RunAutCtrl = 1, SetPoint
+    loop dokud teplota není 15 s v pásmu ±1 °C
+      TO -> TO: PID počítá výkon
+      HEA -> HEA: čti WaterTemp
+      opt WaterTemp nad mezí
+        TO --> HEA: GenErr = 1, topení vypnuto
+        HEA --> BK: stav Held, alarm
+      end
+    end
+    HEA --> BK: Done
+  else míchání
+    BK -> MIX: StartAut (ParamTimeSec)
+    MIX -> MO: Req2RunAutCtrl = 1
+    loop dokud čas < ParamTimeSec
+      note over MIX, MO: míchadlo běží
+      MIX -> MIX: iSecImp, ElapsedTimeSec + 1
+    end
+    MIX --> BK: Done
+  end
+
+  BK -> HEA: ResetDone, topení vypnout
+  BK -> MIX: ResetDone, míchadlo vypnout
+
+  note over BK, VD: 3. Vypouštění
+  BK -> DRA: StartAut (ParamDrainLevel)
+  DRA -> VD: Req2OpenAut = 1
+  VD --> DRA: Open = 1
+  loop dokud hladina > ParamDrainLevel
+    note over DRA, VD: ventil otevřen
+    DRA -> DRA: čti WaterLevel
+  end
+  DRA -> VD: Req2CloseAut = 1
+  VD --> DRA: Closed = 1
+  DRA --> BK: Done
+  BK -> DRA: ResetDone
+  BK -> BK: dávka dokončena, záznam do protokolu
+
+else podmínky nesplněny
+  BK -> BK: start zamítnut, hlášení operátorovi
+end
+@enduml
