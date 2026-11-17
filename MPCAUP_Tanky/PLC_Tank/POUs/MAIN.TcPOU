@@ -7,7 +7,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Global.secImp := NOT(Global.secImp);]]></ST>
+      <ST><![CDATA[Global.secImp := NOT(Global.secImp);
+        Global.Tank1.Draining.WaterLevel := Global.Tank1.Filling.WaterLevel;
+        Test();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="337" Count="0" />

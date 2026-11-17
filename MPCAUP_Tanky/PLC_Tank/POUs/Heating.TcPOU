@@ -103,11 +103,11 @@ END_VAR
 {endregion}
 
 {region "Done"}
-    //every phase should have finish condition - heating phase - if water temp is on requested value for 15 seconds with 1°C hysteresis
+    //every phase should have finish condition - heating phase - if water temp is on requested value for 10 seconds with 1°C hysteresis
     //after that done state should be setted to 1
     Heater.ThresholdTimer(
         IN := HeatingPhase.State.Running AND (ABS(HeatingPhase.WaterTemp - HeatingPhase.ParamReqTemp) <= 1.0),
-        PT := T#15S);
+        PT := T#10S);
 
     // time spent in the band, in seconds (for visualization)
     HeatingPhase.fTime := DINT_TO_INT(TIME_TO_DINT(Heater.ThresholdTimer.ET) / 1000);
