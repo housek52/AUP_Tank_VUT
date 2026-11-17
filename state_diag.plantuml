@@ -1,0 +1,19 @@
+@startuml
+skinparam shadowing false
+skinparam DefaultFontName Arial
+skinparam nodesep 60
+skinparam ranksep 80
+
+[*] --> Idle
+Idle --> Running : Start (StartAut nebo StartMan)\n[MayRun, není GenErr]
+Running --> Held : Hold (PauseMan)\nnebo porucha (GenErr)
+Held --> Running : Restart (ResumeMan)\n[porucha odstraněna]
+Running --> Idle : [WaterLevel ≥ ParamFillLevel]\n/ Done = TRUE
+Running --> Idle : Stop \n(StopAut nebo StopMan)
+Held --> Idle : Stop (StopMan)
+
+Idle : entry / zavřít plnicí ventil
+Running : entry / otevřít plnicí ventil
+Running : do / porovnávat WaterLevel s ParamFillLevel
+Held : entry / zavřít plnicí ventil
+@enduml

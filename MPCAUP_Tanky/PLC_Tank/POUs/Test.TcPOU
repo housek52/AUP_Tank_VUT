@@ -4,7 +4,7 @@
     <Declaration><![CDATA[PROGRAM Test
 VAR
 	State : INT := 0;
-  bStart : BOOL;           // set to TRUE online to start the test
+  	bStart : BOOL;           // set to TRUE online to start the test
 	bAbort : BOOL;           // set to TRUE online to stop the test
 	bFinished : BOOL;        // TRUE after the last step
 	bFault : BOOL;           // TRUE if the test was stopped by a tank error
@@ -41,21 +41,23 @@ CASE State OF
 		END_IF;
 
 	10: // all phases to manual mode and clear Done
-		Global.Tank1.Filling.Cmd.ManCtrl  := TRUE;
-		Global.Tank1.Heating.Cmd.ManCtrl  := TRUE;
-		Global.Tank1.Mixing.Cmd.ManCtrl   := TRUE;
-		Global.Tank1.Draining.Cmd.ManCtrl := TRUE;
-		Global.Tank1.Filling.Cmd.ResetDone  := TRUE;
-		Global.Tank1.Heating.Cmd.ResetDone  := TRUE;
-		Global.Tank1.Mixing.Cmd.ResetDone   := TRUE;
-		Global.Tank1.Draining.Cmd.ResetDone := TRUE;
-		State := 11;
+		Global.Tank1.Filling.Cmd.AutCtrl  := TRUE;
+    	Global.Tank1.Heating.Cmd.AutCtrl  := TRUE;
+    	Global.Tank1.Mixing.Cmd.AutCtrl   := TRUE;
+    	Global.Tank1.Draining.Cmd.AutCtrl := TRUE;
+    	Global.Tank1.Filling.Cmd.ResetDone  := TRUE;
+    	Global.Tank1.Heating.Cmd.ResetDone  := TRUE;
+    	Global.Tank1.Mixing.Cmd.ResetDone   := TRUE;
+    	Global.Tank1.Draining.Cmd.ResetDone := TRUE;
+    	State := 11;
 
-	11: // 1. filling
-		Global.Tank1.Filling.ParamFillLevel := rFillLevel;
-		Global.Tank1.Filling.Cmd.StartMan := TRUE;
-		State := 12;
-
+	11: // 1. filling (wait until all phases are in auto mode)
+    IF Global.Tank1.Filling.State.AutCtrl AND Global.Tank1.Heating.State.AutCtrl AND
+       Global.Tank1.Mixing.State.AutCtrl AND Global.Tank1.Draining.State.AutCtrl THEN
+        Global.Tank1.Filling.ParamFillLevel := rFillLevel;
+        Global.Tank1.Filling.Cmd.StartAut := TRUE;
+        State := 12;
+    	END_IF;
 	12: // wait until the requested level is reached
 		IF Global.Tank1.Filling.State.Done THEN
 			Global.Tank1.Filling.Cmd.ResetDone := TRUE;
@@ -64,9 +66,9 @@ CASE State OF
 
 	20: // 2. heating with mixing, both phases start together
 		Global.Tank1.Heating.ParamReqTemp := rReqTemp;
-		Global.Tank1.Heating.Cmd.StartMan := TRUE;
+		Global.Tank1.Heating.Cmd.StartAut := TRUE;
 		Global.Tank1.Mixing.ParamTimeSec := iMixTimeSec;
-		Global.Tank1.Mixing.Cmd.StartMan := TRUE;
+		Global.Tank1.Mixing.Cmd.StartAut := TRUE;
 		State := 21;
 
 	21: // wait until both phases are done
@@ -78,7 +80,7 @@ CASE State OF
 
 	30: // 3. draining
 		Global.Tank1.Draining.ParamDrainLevel := rDrainLevel;
-		Global.Tank1.Draining.Cmd.StartMan := TRUE;
+		Global.Tank1.Draining.Cmd.StartAut := TRUE;
 		State := 31;
 
 	31: // wait until the water level is low enough
@@ -88,10 +90,10 @@ CASE State OF
 		END_IF;
 
 	90: // abort or fault: stop all phases and go back to idle
-		Global.Tank1.Filling.Cmd.StopMan  := TRUE;
-		Global.Tank1.Heating.Cmd.StopMan  := TRUE;
-		Global.Tank1.Mixing.Cmd.StopMan   := TRUE;
-		Global.Tank1.Draining.Cmd.StopMan := TRUE;
+		Global.Tank1.Filling.Cmd.StopAut  := TRUE;
+		Global.Tank1.Heating.Cmd.StopAut  := TRUE;
+		Global.Tank1.Mixing.Cmd.StopAut   := TRUE;
+		Global.Tank1.Draining.Cmd.StopAut := TRUE;
 		State := 0;
 
 	99: // finished
