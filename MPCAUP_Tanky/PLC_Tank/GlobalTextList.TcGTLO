@@ -1,10 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
   <GlobalTextList Name="GlobalTextList" Id="{8b92fa73-7e66-4a1d-8aae-2f4ecfc497d6}">
     <XmlArchive>
       <Data>
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
+            <o>
+              <v n="TextID">"175"</v>
+              <v n="TextDefault">"%.1f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"287"</v>
+              <v n="TextDefault">"%f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"867"</v>
+              <v n="TextDefault">"1"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
             <o>
               <v n="TextID">"815"</v>
               <v n="TextDefault">"ABC"</v>
@@ -31,13 +46,73 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"132"</v>
+              <v n="TextDefault">"Done"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"884"</v>
+              <v n="TextDefault">"Draining Valve"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"673"</v>
+              <v n="TextDefault">"Engine"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"457"</v>
+              <v n="TextDefault">"Fill it up"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"246"</v>
+              <v n="TextDefault">"Fill level"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"201"</v>
               <v n="TextDefault">"Filling Valve"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"934"</v>
+              <v n="TextDefault">"Heater"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"659"</v>
+              <v n="TextDefault">"Idle"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"560"</v>
               <v n="TextDefault">"MAN"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"824"</v>
+              <v n="TextDefault">"Manual"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"5"</v>
+              <v n="TextDefault">"Off"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"955"</v>
+              <v n="TextDefault">"off"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"153"</v>
+              <v n="TextDefault">"On"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"110"</v>
+              <v n="TextDefault">"on"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -51,8 +126,63 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"837"</v>
+              <v n="TextDefault">"Pause"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"948"</v>
+              <v n="TextDefault">"Phase Draining"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"553"</v>
+              <v n="TextDefault">"Phase Filling"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"836"</v>
+              <v n="TextDefault">"Phase Heating"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"803"</v>
+              <v n="TextDefault">"Phase Mixing"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"98"</v>
               <v n="TextDefault">"Res. SUF"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"564"</v>
+              <v n="TextDefault">"Reset"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"103"</v>
+              <v n="TextDefault">"Resume"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"332"</v>
+              <v n="TextDefault">"rst DONE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"828"</v>
+              <v n="TextDefault">"Running"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"709"</v>
+              <v n="TextDefault">"Start"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"649"</v>
+              <v n="TextDefault">"Stop"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

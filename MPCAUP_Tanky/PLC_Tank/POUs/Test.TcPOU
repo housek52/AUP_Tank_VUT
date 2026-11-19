@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
   <POU Name="Test" Id="{b48fe353-a43c-460a-bd31-5cbc20fa1301}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Test
 VAR
 	State : INT := 0;
-  	bStart : BOOL;           // set to TRUE online to start the test
+  	bStart : BOOL := true;           // set to TRUE online to start the test
 	bAbort : BOOL;           // set to TRUE online to stop the test
 	bFinished : BOOL;        // TRUE after the last step
 	bFault : BOOL;           // TRUE if the test was stopped by a tank error
@@ -12,8 +12,8 @@ VAR
 
 	// test parameters, can be changed online before the start
 	rFillLevel : REAL := 1.8;       // m
-	rReqTemp : REAL := 40.0;        // degC, must be reachable in the simulator
-	iMixTimeSec : INT := 20;        // s
+	rReqTemp : REAL := 80.0;        // degC, must be reachable in the simulator
+	iMixTimeSec : INT := 50;        // s
 	rDrainLevel : REAL := 0.2;      // m
 END_VAR
 ]]></Declaration>
@@ -105,14 +105,5 @@ CASE State OF
 END_CASE;
 ]]></ST>
     </Implementation>
-    <LineIds Name="Test">
-      <LineId Id="9" Count="1" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="16" Count="2" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
