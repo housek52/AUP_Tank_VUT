@@ -20,9 +20,9 @@ VAR CONSTANT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[pidParameters.fKp := 1; //P
-//pidParameters.tTn := T#2S; //I
-//pidParameters.tTv := T#0.5S; //D
+      <ST><![CDATA[pidParameters.fKp := 11.188; //P
+pidParameters.tTn := T#16.4762S; //I
+// pidParameters.tTv := T#0.5S; //D
 pidParameters.tCtrlCycleTime := T#200MS;
 pidParameters.tTaskCycleTime := T#100MS;
 pidParameters.fOutMaxLimit := 100;
@@ -40,8 +40,8 @@ ioHeatStruct.PID(
 	eMode := E_CTRL_MODE.eCTRL_MODE_ACTIVE, // automatic mode of PID component
 	stParams := pidParameters);
 
-ioHeatStruct.State.HeatingOut := ioHeatStruct.PID.fOut;
-
+//ioHeatStruct.State.HeatingOut := ioHeatStruct.PID.fOut;
+ioHeatStruct.State.HeatingOut := 40;
 	 
 {region "Manual/Automat"}
 // switching state of engine - automatic or manual control (default state is manual)

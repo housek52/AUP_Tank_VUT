@@ -53,9 +53,14 @@ END_VAR
 		ioEngStruct.State.RunOut := FALSE;
 	END_IF
 	
+	ioEngStruct.Cmd.AutCtrl := FALSE;
+	ioEngStruct.Cmd.ManCtrl := FALSE;
+	
 	IF NOT ioEngStruct.State.AutCtrl AND NOT ioEngStruct.State.ManCtrl THEN
 		ioEngStruct.State.ManCtrl := TRUE;
 	END_IF
+	
+	
 {endregion}
 	 
 {region "MayRun / MayAutoRun"}

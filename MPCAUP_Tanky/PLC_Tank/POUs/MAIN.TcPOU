@@ -9,7 +9,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[Global.secImp := NOT(Global.secImp);
         Global.Tank1.Draining.WaterLevel := Global.Tank1.Filling.WaterLevel;
-        //Test();]]></ST>
+        Test();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

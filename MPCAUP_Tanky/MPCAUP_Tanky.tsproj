@@ -28,7 +28,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{E24257DA-2A8A-49A0-98A5-1F7251912541}" Name="PLC_Tank" PrjFilePath="PLC_Tank\PLC_Tank.plcproj" TmcFilePath="PLC_Tank\PLC_Tank.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0A5E58E2-B7C7-E0A5-E827-90A4191B9ABA}" TmcPath="PLC_Tank\PLC_Tank.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{910605A7-61E9-2D29-37F6-BBD846AB1D63}" TmcPath="PLC_Tank\PLC_Tank.tmc">
 					<Name>PLC_Tank Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

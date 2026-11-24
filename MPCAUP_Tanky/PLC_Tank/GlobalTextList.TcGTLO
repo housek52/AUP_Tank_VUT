@@ -190,6 +190,11 @@
               <v n="TextDefault">"SUF"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
+            <o>
+              <v n="TextID">"912"</v>
+              <v n="TextDefault">"Test"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
           </l>
           <l n="Languages" t="ArrayList" />
           <v n="GuidInit">{06ae5c69-045c-4a18-baa5-f099c8d55044}</v>
